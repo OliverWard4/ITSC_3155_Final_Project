@@ -25,8 +25,8 @@ CREATE TABLE cork_boards (
 CREATE TABLE recently_viewed (
     id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(50) NOT NULL,
-    board_id INT NOT NULL,
+    board_title VARCHAR(255) NOT NULL,
     view_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (username) REFERENCES users(username),
-    FOREIGN KEY (board_id) REFERENCES cork_boards(id)
+    FOREIGN KEY (board_title) REFERENCES cork_boards(title)
 );
