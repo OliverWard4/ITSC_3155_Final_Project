@@ -9,13 +9,13 @@ def index():
     return render_template('index.html')
 
 #Sign up page route
-@app.route('/signup')
+@app.get('/signup')
 def signUp():
     #Renders the sign up page
     return render_template('signup.html')
 
 #Login page route
-@app.route('/login')
+@app.get('/login')
 def login():
     #Renders the login page
     return render_template('login.html')
