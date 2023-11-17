@@ -5,6 +5,20 @@
 {% block body %}
 <!-- Main content section -->
 <div class="container mt-4">
-
+<h2>Recently Viewed Boards</h2>
+{% if recently_viewed %}
+<ul class="list-group">
+    {% for board in recently_viewed %}
+    <li class="list-group-item">
+        <a href="#">{{ board.board_title }}</a>
+        <p>Username: {{ board.username }}</p>
+        <p>View Date: {{ board.view_date }}</p>
+        <button class="btn btn-primary float-right">View</button>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+    <p>No recently viewed boards found.</p>
+{% endif %}
 </div>
 {% endblock %}
