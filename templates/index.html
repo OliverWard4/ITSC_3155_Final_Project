@@ -1,47 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <!-- Add this line to include Font Awesome CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+{% extends'base.html' %}
 
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <title>{% block title %}Home - Cork Board{% endblock %}</title>
-</head>
-<body>
+{% block title %}Home - Cork Board{% endblock %}
 
-    <header>
-        <div data-include="../components/header.html"></div>
-
-    </header>
-
- 
-
-
-
+    {% block body %}
     <!-- Main content section -->
     <div class="container mt-5">
-        {% block body %}
             <div class="jumbotron">
                 <h1 class="display-4">Welcome to Cork Board!</h1>
                 <p class="lead">Discover and engage with campus activities, events, and more.</p>
                 <hr class="my-4">
                 <p>Get started by exploring boards, creating your own, or checking out starred boards.</p>
-                <a class="btn btn-primary btn-lg" href="/templates/signup.html" role="button">Explore Boards</a>
+                <a class="btn btn-primary btn-lg" href="/signup" role="button">Explore Boards</a>
             </div>
-        {% endblock %}
     </div>
-
-
-    <footer class="fixed-bottom">
-        <div data-include="../components/footer.html"></div>
-    </footer>
-
-    <script src="../static/scripts/HTMLInclude.min.js"></script>
-
-</body>
-</html>
+    {% endblock %}
 
