@@ -20,6 +20,8 @@ def login():
     #Renders the login page
     return render_template('login.html')
 
+
+
 if __name__ == "__main__":
     #Runs the application
     app.run(debug=True)
