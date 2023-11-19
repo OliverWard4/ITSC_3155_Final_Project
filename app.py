@@ -34,10 +34,6 @@ def home():
 def about():
     return render_template('about.html', title='About')
 
-@app.route("/home/search")
-def search():
-    return render_template('search.html')
-
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -114,3 +110,20 @@ def account():
     return render_template('account.html', title='Account',
                            image_file=image_file, form=form)
 
+
+
+@app.route("/home/search")
+def search():
+    return render_template('search.html')
+
+@app.route("/home/myBoards")
+def myBoards():
+    return render_template('myBoards.html')
+
+@app.route('/home/recentBoards')
+def recentBoards():
+        return render_template('recentBoards.html')
+
+@app.route('/home/favoriteBoards')
+def favoriteBoards():
+    return render_template('starredBoards.html')
