@@ -127,3 +127,6 @@ def recentBoards():
 @app.route('/home/favoriteBoards')
 def favoriteBoards():
     return render_template('starredBoards.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
