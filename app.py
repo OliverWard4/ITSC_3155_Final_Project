@@ -26,7 +26,8 @@ posts = [
 
 @app.route("/")
 def index():
-    return render_template('landingPage.html')
+    template_name = 'landingPage.html'
+    return render_template('landingPage.html',template_name=template_name)
 
 @app.route("/home")
 def home():
