@@ -25,10 +25,18 @@ posts = [
 
 
 @app.route("/")
+def index():
+    return render_template('landingPage.html')
+
 @app.route("/home")
 def home():
-    return render_template('home.html', posts=posts)
+    template_name = 'home.html'
+    return render_template('home.html', posts=posts, template_name=template_name)
 
+@app.route("/home/landingPage")
+def landingPage():
+    template_name = 'landingPage.html'
+    return render_template('landingPage.html', template_name=template_name)
 
 @app.route("/about")
 def about():

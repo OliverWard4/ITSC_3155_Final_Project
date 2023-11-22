@@ -56,8 +56,11 @@
           {% endwith %}
           {% block content %}{% endblock %}
         </div>
+
+        {% if template_name == 'home.html' %}
         <div class="col-md-4">
           <div class="content-section">
+            
             <h3>Menu</h3>
             <p class='text-muted'>You can put any information here you'd like.
               <ul class="list-group">
@@ -78,14 +81,17 @@
                 <li class="list-group-item list-group-item-light">
                   <a class="article-title" href="{{ url_for('myBoards') }}">View CorkBoards </a>
                 </li>
-             
+
               </ul>
             </p>
+            
+
           </div>
-        </div>
+        </div> 
+        {% endif %}
       </div>
     </main>
-
+   
     
     <footer class="mt-auto fixed-bottom">
       <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #925B33;">
