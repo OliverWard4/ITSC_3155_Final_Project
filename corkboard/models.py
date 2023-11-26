@@ -9,6 +9,8 @@ def load_user(user_id):
 
 
 class User(db.Model, UserMixin):
+    __tablename__ = 'user'
+
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -21,9 +23,12 @@ class User(db.Model, UserMixin):
 
 
 class Post(db.Model):
+    __tablename__ = 'post'
+
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    description = db.Column(db.Text, nullable=False)
     content = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
@@ -31,11 +36,22 @@ class Post(db.Model):
         return f"Post('{self.title}', '{self.date_posted}')"
 
 class RecentlyViewed(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    post_title = db.Column(db.String(100), db.ForeignKey('post.title'), nullable=False)
-    date_viewed = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    post_content = db.Column(db.Text, db.ForeignKey('post.content'),nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    __tablename__ = 'recent'
 
-    def __repr__(self):
-        return f"Post('{self.post_title}', '{self.post_content}')"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    view_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+class Starred(db.Model):
+    __tablename__ = 'starred'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text, nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), primary_key=True)
+    commentor_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
