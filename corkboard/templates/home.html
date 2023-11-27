@@ -1,15 +1,19 @@
 {% extends "layout.html" %}
 {% block content %}
-    {% for post in posts %}
+  {% if boards|length == 0%}
+  <h3>There are no boards avaliable</h3>
+  {% else %}
+    {% for board in boards %}
         <article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="#">{{ post.author }}</a>
-              <small class="text-muted">{{ post.date_posted }}</small>
+              <a class="mr-2" href="#">{{ board.author }}</a>
+              <small class="text-muted">{{ board.date_posted }}</small>
             </div>
-            <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content }}</p>
+            <h2><a class="article-title" href="/boards/{{board.id}}">{{ board.title }}</a></h2>
+            <p class="article-content">{{ board.content }}</p>
           </div>
         </article>
     {% endfor %}
+  {% endif %}
 {% endblock content %}

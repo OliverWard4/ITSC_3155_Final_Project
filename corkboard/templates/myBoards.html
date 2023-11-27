@@ -1,4 +1,15 @@
 {% extends "layout.html" %}
 {% block content %}
+    <!-- Main content section -->
+    <div class="container mt-4">
     <h1>My Cork Boards</h1>
+    <ul class="list-group my-3">
+        {% for board in boards %}
+        <li class="list-group-item mt-3">
+            <h5><a href="/boards/{{board.id}}">{{ board.title }}</a></h5>
+            <p>{{board.description}}</p>
+        </li>
+        {% endfor %}
+    </ul>
+    </div>
 {% endblock content %}
