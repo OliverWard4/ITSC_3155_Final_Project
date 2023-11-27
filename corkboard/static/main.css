@@ -87,4 +87,12 @@ a.article-title:hover {
   font-size: 2.5rem;
 }
 
-
+.board {
+  background: #ffffff;
+  padding: 10px 20px;
+  border: 10px solid #814716;
+  border-radius: 3px;
+  margin-bottom: 20px;
+  width: 900px;
+  height: fit-content;
+}

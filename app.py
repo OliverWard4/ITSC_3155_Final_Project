@@ -4,25 +4,12 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
 from corkboard import app, db, bcrypt
 from corkboard.forms import RegistrationForm, LoginForm, UpdateAccountForm
-from corkboard.models import User, Post
+from corkboard.models import User, Post, Board
+from corkboard.posts import router, getAllBoards, getUserBoards
 from flask_login import login_user, current_user, logout_user, login_required
 
 
-posts = [
-    {
-        'author': 'Corey Schafer',
-        'title': 'Board Post 1',
-        'content': 'First post content',
-        'date_posted': 'April 20, 2018'
-    },
-    {
-        'author': 'Jane Doe',
-        'title': 'Board Post 2',
-        'content': 'Second post content',
-        'date_posted': 'April 21, 2018'
-    }
-]
-
+app.register_blueprint(router)
 
 @app.route("/")
 def index():
@@ -32,7 +19,8 @@ def index():
 @app.route("/home")
 def home():
     template_name = 'home.html'
-    return render_template('home.html', posts=posts, template_name=template_name)
+    boards = getAllBoards()
+    return render_template('home.html', boards=boards, template_name=template_name)
 
 @app.route("/home/landingPage")
 def landingPage():
@@ -119,15 +107,17 @@ def account():
     return render_template('account.html', title='Account',
                            image_file=image_file, form=form)
 
-
-
 @app.route("/home/search")
 def search():
     return render_template('search.html')
 
-@app.route("/home/myBoards")
+@app.route("/boards")
 def myBoards():
-    return render_template('myBoards.html')
+    if current_user.is_authenticated:
+        boards = getUserBoards()
+        return render_template('myBoards.html', boards=boards)
+    else:
+        return redirect('/login')
 
 @app.route('/home/recentBoards')
 def recentBoards():
@@ -138,4 +128,6 @@ def favoriteBoards():
     return render_template('starredBoards.html')
 
 if __name__ == '__main__':
+    with app.app_context(): 
+        db.create_all()
     app.run(debug=True)
