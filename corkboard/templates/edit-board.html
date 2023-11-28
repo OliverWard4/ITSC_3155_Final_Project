@@ -2,7 +2,7 @@
 {% block content %}
 <div class="mb-3">
     <h2 style="text-align: center;">Edit Your Board</h2>
-    <form method="POST" action="/boards/" enctype="multipart/form-data">
+    <form method="POST" action="/boards/{{board.id}}/edit" enctype="multipart/form-data">
         <div class="form-group">
             <label for="boardTitle">Board Title</label>
             <input type="text" class="form-control" id="boardTitle" name="boardTitle" value="{{board.title}}">

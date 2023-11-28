@@ -18,7 +18,7 @@
     {% if(current_user.id == user.id)%}
     <!-- Add Content Section -->
     <div class="mt-4">
-        <form action="/boards/edit">
+        <form action="/boards/{{board.id}}/edit" method="GET">
             <button class="btn btn-primary">Add Content</button>
         </form>
         <!-- Your content form can be added here -->
