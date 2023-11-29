@@ -4,24 +4,9 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
 from corkboard import app, db, bcrypt
 from corkboard.forms import RegistrationForm, LoginForm, UpdateAccountForm
-from corkboard.models import User, Post
+from corkboard.models import User, Post, Board
+from corkboard.posts import router, getAllBoards, getUserBoards
 from flask_login import login_user, current_user, logout_user, login_required
-
-
-posts = [
-    {
-        'author': 'Corey Schafer',
-        'title': 'Board Post 1',
-        'content': 'First post content',
-        'date_posted': 'April 20, 2018'
-    },
-    {
-        'author': 'Jane Doe',
-        'title': 'Board Post 2',
-        'content': 'Second post content',
-        'date_posted': 'April 21, 2018'
-    }
-]
 
 
 @app.route("/")
