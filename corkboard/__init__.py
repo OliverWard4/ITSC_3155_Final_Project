@@ -5,7 +5,7 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_mail import Mail
-from dotenv import load_dotenv
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
@@ -19,8 +19,7 @@ login_manager.login_message_category = 'info'
 app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-load_dotenv()
-app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')  # Use your actual environment variable name
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')  # Use your actual environment variable name
+app.config['MAIL_USERNAME'] = 'richcomo123@gmail.com'  # Use your actual environment variable name
+app.config['MAIL_PASSWORD'] = 'ttka qvas cldz ltvg'
 mail = Mail(app)
 
