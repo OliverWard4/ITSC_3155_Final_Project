@@ -2,13 +2,8 @@ import os
 import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
-<<<<<<< HEAD
-from corkboard import app, db, bcrypt, mail
-from corkboard.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
-=======
 from corkboard import app, db, bcrypt
 from corkboard.forms import RegistrationForm, LoginForm, UpdateAccountForm
->>>>>>> 15449a5dffd8c5a12c5ed23e52c928c628caebe8
 from corkboard.models import User, Post, Board
 from corkboard.posts import router, getAllBoards, getUserBoards
 from flask_login import login_user, current_user, logout_user, login_required
@@ -113,54 +108,6 @@ def account():
     return render_template('account.html', title='Account',
                            image_file=image_file, form=form)
 
-<<<<<<< HEAD
-
-
-def send_reset_email(user):
-    token = user.get_reset_token()
-    msg = Message('Password Reset Request',
-                  sender='noreply@demo.com',
-                  recipients=[user.email])
-    msg.body = f'''To reset your password, visit the following link:
-{url_for('reset_token', token=token, _external=True)}
-
-If you did not make this request then simply ignore this email and no changes will be made.
-'''
-    mail.send(msg)
-
-
-@app.route("/reset_password", methods=['GET', 'POST'])
-def reset_request():
-    if current_user.is_authenticated:
-        return redirect(url_for('home'))
-    form = RequestResetForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        send_reset_email(user)
-        flash('An email has been sent with instructions to reset your password.', 'info')
-        return redirect(url_for('login'))
-    return render_template('reset_request.html', title='Reset Password', form=form)
-
-
-@app.route("/reset_password/<token>", methods=['GET', 'POST'])
-def reset_token(token):
-    if current_user.is_authenticated:
-        return redirect(url_for('home'))
-    user = User.verify_reset_token(token)
-    if user is None:
-        flash('That is an invalid or expired token', 'warning')
-        return redirect(url_for('reset_request'))
-    form = ResetPasswordForm()
-    if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user.password = hashed_password
-        db.session.commit()
-        flash('Your password has been updated! You are now able to log in', 'success')
-        return redirect(url_for('login'))
-    return render_template('reset_token.html', title='Reset Password', form=form)
-
-=======
->>>>>>> 15449a5dffd8c5a12c5ed23e52c928c628caebe8
 @app.route("/home/search")
 def search():
     return render_template('search.html')
@@ -184,8 +131,4 @@ def favoriteBoards():
 if __name__ == '__main__':
     with app.app_context(): 
         db.create_all()
-<<<<<<< HEAD
     app.run(debug=True)
-=======
-    app.run(debug=True)
->>>>>>> 15449a5dffd8c5a12c5ed23e52c928c628caebe8

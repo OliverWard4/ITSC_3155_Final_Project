@@ -86,20 +86,6 @@ def deleteBoard(id):
         else:
             return redirect('/login')
 
-<<<<<<< HEAD
-
-
-
-
-
-
-    
-
-
-
-
-
-=======
 @router.post('/<int:id>/comment')
 def createComment(id):
     board = Board.query.get(id)
@@ -123,4 +109,3 @@ def deleteComment(post_id, id):
     db.session.commit()
     
     return redirect(f'/boards/{post_id}')
->>>>>>> 15449a5dffd8c5a12c5ed23e52c928c628caebe8
