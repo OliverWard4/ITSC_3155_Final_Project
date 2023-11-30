@@ -1,4 +1,4 @@
-from flask import Blueprint, abort, request, render_template, url_for, redirect
+from flask import Blueprint, abort, request, render_template, url_for, redirect, flash
 from flask_login import current_user
 from corkboard import db
 from corkboard.models import User, Board, Recent, Starred, Comment
@@ -26,16 +26,34 @@ def create_board():
 
     db.session.add(new_board)
     db.session.commit()
+<<<<<<< HEAD
     return redirect('/')
+=======
+    return redirect('/boards')
+>>>>>>> 15449a5dffd8c5a12c5ed23e52c928c628caebe8
 
 @router.get('/<int:id>')
 def getBoard(id):
     board = Board.query.get_or_404(id)
+<<<<<<< HEAD
     post_id = id
     user = User.query.get(board.user_id)
     comments = Comment.query.filter_by(post_id=post_id).all()
 
     return render_template('boardView.html', board=board, comments=comments, user=user)
+=======
+    user = User.query.get(board.user_id)
+    post_id = id
+    comments = Comment.query.filter_by(post_id=post_id).all()
+
+    comment_data = []
+
+    for comment in comments:
+        poster = User.query.get(comment.commentor_id)
+        comment_data.append((comment, poster))
+
+    return render_template('boardView.html', board=board, comments=comments, comment_data = comment_data, user=user)
+>>>>>>> 15449a5dffd8c5a12c5ed23e52c928c628caebe8
 
 def getAllBoards():
     boards = Board.query.all()
@@ -57,7 +75,11 @@ def editBoard(id):
             board_to_edit.file = request.form.get('uploadFiles')
             try:
                 db.session.commit()
+<<<<<<< HEAD
                 return redirect('/')
+=======
+                return redirect(f'/boards/{board_to_edit.id}')
+>>>>>>> 15449a5dffd8c5a12c5ed23e52c928c628caebe8
             except:
                 return abort(400, 'There was an issue with editing your board.')
         else:
@@ -80,6 +102,7 @@ def deleteBoard(id):
         else:
             return redirect('/login')
 
+<<<<<<< HEAD
 
 
 
@@ -92,3 +115,28 @@ def deleteBoard(id):
 
 
 
+=======
+@router.post('/<int:id>/comment')
+def createComment(id):
+    board = Board.query.get(id)
+    content = request.form.get('comment')
+    post_id = board.id
+    commentor_id = current_user.id
+    newComment = Comment(content=content, post_id=post_id, commentor_id=commentor_id)
+
+    if content is None:
+        abort(400, 'Comment is missing')
+    else:
+        db.session.add(newComment)
+        db.session.commit()
+        return redirect(f'/boards/{post_id}')
+
+@router.post('/<int:post_id>/comment/delete/<int:id>')
+def deleteComment(post_id, id):
+    comment_to_delete = Comment.query.get(id)
+
+    db.session.delete(comment_to_delete)
+    db.session.commit()
+    
+    return redirect(f'/boards/{post_id}')
+>>>>>>> 15449a5dffd8c5a12c5ed23e52c928c628caebe8

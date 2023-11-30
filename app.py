@@ -2,8 +2,13 @@ import os
 import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
+<<<<<<< HEAD
 from corkboard import app, db, bcrypt, mail
 from corkboard.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
+=======
+from corkboard import app, db, bcrypt
+from corkboard.forms import RegistrationForm, LoginForm, UpdateAccountForm
+>>>>>>> 15449a5dffd8c5a12c5ed23e52c928c628caebe8
 from corkboard.models import User, Post, Board
 from corkboard.posts import router, getAllBoards, getUserBoards
 from flask_login import login_user, current_user, logout_user, login_required
@@ -108,6 +113,7 @@ def account():
     return render_template('account.html', title='Account',
                            image_file=image_file, form=form)
 
+<<<<<<< HEAD
 
 
 def send_reset_email(user):
@@ -153,6 +159,8 @@ def reset_token(token):
         return redirect(url_for('login'))
     return render_template('reset_token.html', title='Reset Password', form=form)
 
+=======
+>>>>>>> 15449a5dffd8c5a12c5ed23e52c928c628caebe8
 @app.route("/home/search")
 def search():
     return render_template('search.html')
@@ -176,4 +184,8 @@ def favoriteBoards():
 if __name__ == '__main__':
     with app.app_context(): 
         db.create_all()
+<<<<<<< HEAD
     app.run(debug=True)
+=======
+    app.run(debug=True)
+>>>>>>> 15449a5dffd8c5a12c5ed23e52c928c628caebe8
