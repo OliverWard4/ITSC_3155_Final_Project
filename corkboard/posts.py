@@ -26,22 +26,11 @@ def create_board():
 
     db.session.add(new_board)
     db.session.commit()
-<<<<<<< HEAD
-    return redirect('/')
-=======
     return redirect('/boards')
->>>>>>> 15449a5dffd8c5a12c5ed23e52c928c628caebe8
 
 @router.get('/<int:id>')
 def getBoard(id):
     board = Board.query.get_or_404(id)
-<<<<<<< HEAD
-    post_id = id
-    user = User.query.get(board.user_id)
-    comments = Comment.query.filter_by(post_id=post_id).all()
-
-    return render_template('boardView.html', board=board, comments=comments, user=user)
-=======
     user = User.query.get(board.user_id)
     post_id = id
     comments = Comment.query.filter_by(post_id=post_id).all()
@@ -53,7 +42,6 @@ def getBoard(id):
         comment_data.append((comment, poster))
 
     return render_template('boardView.html', board=board, comments=comments, comment_data = comment_data, user=user)
->>>>>>> 15449a5dffd8c5a12c5ed23e52c928c628caebe8
 
 def getAllBoards():
     boards = Board.query.all()
@@ -75,11 +63,7 @@ def editBoard(id):
             board_to_edit.file = request.form.get('uploadFiles')
             try:
                 db.session.commit()
-<<<<<<< HEAD
-                return redirect('/')
-=======
                 return redirect(f'/boards/{board_to_edit.id}')
->>>>>>> 15449a5dffd8c5a12c5ed23e52c928c628caebe8
             except:
                 return abort(400, 'There was an issue with editing your board.')
         else:
