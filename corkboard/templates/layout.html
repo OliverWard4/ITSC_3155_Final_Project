@@ -26,11 +26,12 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
+                <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
               {% if current_user.is_authenticated %}
+                <a class="nav-item nav-link" href="/boards/create">Create</a>
                 <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
                 <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
               {% else %}
@@ -56,8 +57,11 @@
           {% endwith %}
           {% block content %}{% endblock %}
         </div>
+
+        {% if template_name == 'home.html' %}
         <div class="col-md-4">
           <div class="content-section">
+            
             <h3>Menu</h3>
             <p class='text-muted'>You can put any information here you'd like.
               <ul class="list-group">
@@ -78,16 +82,19 @@
                 <li class="list-group-item list-group-item-light">
                   <a class="article-title" href="{{ url_for('myBoards') }}">View CorkBoards </a>
                 </li>
-             
+
               </ul>
             </p>
+            
+
           </div>
-        </div>
+        </div> 
+        {% endif %}
       </div>
     </main>
-
+   
     
-    <footer class="mt-auto fixed-bottom">
+    <footer class="mt-3 fixed-bottom">
       <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #925B33;">
         <div class="container">
           <a class="navbar-brand mr-4" href="/">CorkBoard</a>
