@@ -1,5 +1,15 @@
 {% extends "layout.html" %}
 {% block content %}
+  <div style="margin-left: 94%;">
+    <div class="mb-3">
+      <a class="btn btn-primary" href="/boards/create" role="button">
+        <div style="size: 50px;">  
+        +
+        </div>
+      </a>
+    </div>
+  </div>
+
   {% if boards|length == 0%}
   <h3>There are no boards avaliable</h3>
   {% else %}

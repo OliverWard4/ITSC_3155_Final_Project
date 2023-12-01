@@ -66,7 +66,7 @@ class Starred(db.Model):
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
-    post_id = db.Column(db.Integer, db.ForeignKey('board.id'), primary_key=True)
+    post_id = db.Column(db.Integer, db.ForeignKey('board.id'), nullable=False)
     commentor_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 class Board(db.Model):
