@@ -8,6 +8,10 @@
         <li class="list-group-item mt-3">
             <h5><a href="/boards/{{board.id}}">{{ board.title }}</a></h5>
             <p>{{board.description}}</p>
+            <form>
+                <button type="submit" class="btn btn-sm btn-info" formmethod="POST" formaction="/boards/{{board.id}}/delete">Delete</button>
+                <button type="submit" class="btn btn-sm btn-info mx-2" formmethod="POST" formaction="/boards/{{board.id}}/star"><img src="../static/Images/icons8-star-50.png" width="20px;"></button>
+            </form>
         </li>
         {% endfor %}
     </ul>

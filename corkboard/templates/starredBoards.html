@@ -1,4 +1,17 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>Favorite Boards</h1>
+    <!-- Main content section -->
+    <div class="container mt-4">
+        <h1>Starred Boards</h1>
+        <ul class="list-group my-3">
+            {% for starred in starredBoards %}
+            <li class="list-group-item mt-3">
+                <h5><a href="/boards/{{starred.post_id}}">{{ starred.post_id }}</a></h5>
+                <form>
+                    <button type="submit" class="btn btn-sm btn-info mx-2" formmethod="POST" formaction="/boards/{{starred.id}}/star"><img src="../static/Images/icons8-star-50.png" width="20px;"></button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+        </div>
 {% endblock content %}
