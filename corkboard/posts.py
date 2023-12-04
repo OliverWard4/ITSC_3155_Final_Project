@@ -71,7 +71,7 @@ def editBoard(id):
     else:
         return redirect('/login')
     
-@router.route('/<int:id>/delete')
+@router.post('/<int:id>/delete')
 def deleteBoard(id):
         board_to_delete = Board.query.get_or_404(id)
         if current_user.is_authenticated:
@@ -88,7 +88,7 @@ def deleteBoard(id):
 
 @router.post('/<int:id>/comment')
 def createComment(id):
-    board = Board.query.get(id)
+    board = Board.query.get_or_404(id)
     content = request.form.get('comment')
     post_id = board.id
     commentor_id = current_user.id
@@ -103,9 +103,36 @@ def createComment(id):
 
 @router.post('/<int:post_id>/comment/delete/<int:id>')
 def deleteComment(post_id, id):
-    comment_to_delete = Comment.query.get(id)
+    comment_to_delete = Comment.query.get_or_404(id)
 
     db.session.delete(comment_to_delete)
     db.session.commit()
     
     return redirect(f'/boards/{post_id}')
+
+def hasStarredBoard(id):
+    board = Board.query.get_or_404(id)
+    user_id = current_user.id
+    hasStarred = Starred.query.filter_by(post_id=board.id, user_id=user_id).count()
+    return hasStarred
+
+@router.post('/<int:id>/star')
+def starBoard(id):
+    board = Board.query.get_or_404(id)
+    user_id = current_user.id
+    if(hasStarredBoard(board.id) == 0):
+        star = Starred(post_id=board.id, user_id=user_id)
+        db.session.add(star)
+        flash('This board has been added to your Starred Boards list', 'success')
+    else:
+        Starred.query.filter_by(post_id=board.id, user_id=user_id).delete()
+        flash('This board has been removed from your Starred Boards list', 'success')
+    db.session.commit()
+    return redirect('/boards/starred')
+
+
+
+def getStarredBoards():
+    user_id = current_user.id
+    starredBoards = Starred.query.filter_by(user_id=user_id).all()
+    return starredBoards
