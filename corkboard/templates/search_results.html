@@ -1,0 +1,10 @@
+  {% for result in results %}
+    
+    <tr>
+        <td><a href="/boards/{{result.id}}">{{ result.title }}</a></td>
+        <td>{{ result.user_id }}</td>
+        <td>{{ result.date_posted }}</td>
+        <td>{{ result.description }}</td>
+    </tr>
+
+    {% endfor %}

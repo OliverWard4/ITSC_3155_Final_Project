@@ -10,6 +10,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
 
 
+
 app.register_blueprint(router)
 
 @app.route("/")
@@ -152,8 +153,8 @@ def reset_token(token):
         return redirect(url_for('login'))
     return render_template('reset_token.html', title='Reset Password', form=form)
 
-@app.route("/home/search")
-def search():
+@app.route("/search")
+def searchPage():
     return render_template('search.html')
 
 @app.route("/boards")
@@ -175,6 +176,19 @@ def starredBoards():
         return render_template('starredBoards.html', starredBoards = starredBoards)
     else:
         return redirect('/login')
+
+@app.route("/searching")
+def search():
+    q = request.args.get("q")
+    print(q)
+
+    if q:
+        results = Board.query.filter(Board.title.icontains(q) | Board.user_id.icontains(q)).order_by(Board.date_posted.desc()).limit(20).all()
+    else: 
+        results = []
+    
+    return render_template("search_results.html", results=results)
+
 
 if __name__ == '__main__':
     with app.app_context(): 

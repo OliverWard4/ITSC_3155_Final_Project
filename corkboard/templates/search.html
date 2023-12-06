@@ -1,11 +1,28 @@
 {% extends "layout.html" %}
 {% block content %}
+
+    <script src="https://unpkg.com/htmx.org@1.9.9"></script>
+    
     <h1>Search Page</h1>
 
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Search Bar</label>
-        <input type="corkBoard_Name" class="form-control" id="exampleFormControlInput1" placeholder="Search"> 
-        <a class="btn btn-primary" href="#" role="button">Search</a> 
+        <input type="text" class="input" placeholder="Search" name="q" hx-get="/searching" hx-trigger="keyup changed delay:500ms" hx-target="#results">   
     </div>
+    <table class="table is-fullwidth">
+        <thead>
+            <tr>
+                <th>Title</th>        
+                <th>User Id</th>
+                <th>Date Posted</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+            <tbody id="results">        
+                    
+            </tbody>
+    </table>
+  
+
 
 {% endblock content %}
