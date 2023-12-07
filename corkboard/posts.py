@@ -1,7 +1,7 @@
 from flask import Blueprint, abort, request, render_template, url_for, redirect, flash
 from flask_login import current_user
 from corkboard import db
-from corkboard.models import User, Board, Recent, Starred, Comment
+from corkboard.models import User, Board, Starred, Comment
 from datetime import datetime, date
 
 router = Blueprint('boards', __name__, url_prefix='/boards')
@@ -131,8 +131,17 @@ def starBoard(id):
     return redirect('/boards/starred')
 
 
-
+@router.route('/starred')
 def getStarredBoards():
-    user_id = current_user.id
-    starredBoards = Starred.query.filter_by(user_id=user_id).all()
-    return starredBoards
+    if current_user.is_authenticated:
+        user_id = current_user.id
+        starredBoards = Starred.query.filter_by(user_id=user_id).all()
+        starredBoard_data = []
+
+        for starred in starredBoards:
+            board = Board.query.get(starred.post_id)
+            starredBoard_data.append((starred, board))
+
+        return render_template('starredBoards.html', starredBoard_data = starredBoard_data)
+    else:
+        return redirect('/login')

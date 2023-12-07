@@ -5,10 +5,9 @@ from flask import render_template, url_for, flash, redirect, request
 from corkboard import app, db, bcrypt, mail
 from corkboard.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
 from corkboard.models import User, Post, Board
-from corkboard.posts import router, getAllBoards, getUserBoards, getStarredBoards
+from corkboard.posts import router, getAllBoards, getUserBoards
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
-
 
 
 app.register_blueprint(router)
@@ -169,14 +168,6 @@ def myBoards():
 def recentBoards():
         return render_template('recentBoards.html')
 
-@app.route('/boards/starred')
-def starredBoards():
-    if current_user.is_authenticated:
-        starredBoards = getStarredBoards()
-        return render_template('starredBoards.html', starredBoards = starredBoards)
-    else:
-        return redirect('/login')
-
 @app.route("/searching")
 def search():
     q = request.args.get("q")
@@ -188,7 +179,6 @@ def search():
         results = []
     
     return render_template("search_results.html", results=results)
-
 
 if __name__ == '__main__':
     with app.app_context(): 

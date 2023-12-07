@@ -4,14 +4,15 @@
     <div class="container mt-4">
         <h1>Starred Boards</h1>
         <ul class="list-group my-3">
-            {% for starred in starredBoards %}
+            {% for starred, board in starredBoard_data %}
             <li class="list-group-item mt-3">
-                <h5><a href="/boards/{{starred.post_id}}">{{ starred.post_id }}</a></h5>
+                <h5><a href="/boards/{{board.id}}">{{ board.title }}</a></h5>
+                <p>{{ board.description }}</p>
                 <form>
-                    <button type="submit" class="btn btn-sm btn-info mx-2" formmethod="POST" formaction="/boards/{{starred.id}}/star"><img src="../static/Images/icons8-star-50.png" width="20px;"></button>
+                    <button type="submit" class="btn btn-sm btn-info" formmethod="POST" formaction="/boards/{{board.id}}/star"><img src="../static/Images/icons8-star-50.png" width="20px;"></button>
                 </form>
             </li>
             {% endfor %}
         </ul>
-        </div>
+    </div>
 {% endblock content %}
