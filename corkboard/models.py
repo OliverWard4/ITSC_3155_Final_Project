@@ -48,14 +48,6 @@ class Post(db.Model):
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
 
-class Recent(db.Model):
-    __tablename__ = 'recent'
-
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    post_id = db.Column(db.Integer, db.ForeignKey('board.id'), nullable=False)
-    view_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-
 class Starred(db.Model):
     __tablename__ = 'starred'
 
