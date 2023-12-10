@@ -42,14 +42,6 @@
               <p>File: <a href="{{ url_for('static', filename='uploads/' + post.file_path) }}" target="_blank" download>Download File</a> </p>
               {% endif %}
             {% endif %}
-
-            <h2><a class="article-title" href="/boards/{{board.id}}">{{ board.title }}</a></h2>
-            <p class="article-content">{{ board.content }}</p>
-            {% if current_user.is_authenticated: %}
-              <form>
-                <button type="submit" class="btn btn-sm btn-info mx-2" formmethod="POST" formaction="/boards/{{board.id}}/star"><img src="../static/Images/icons8-star-50.png" width="20px;"></button>
-              </form>
-            {% endif %}
           </div>
         </article>
         
