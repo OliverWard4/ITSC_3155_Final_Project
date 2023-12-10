@@ -7,6 +7,8 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-xxx" crossorigin="anonymous">
+
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
 
@@ -15,34 +17,40 @@
     {% else %}
         <title>CorkBoard</title>
     {% endif %}
+  
 </head>
 <body>
-    <header class="site-header">
-      <nav class="navbar navbar-expand-md navbar-dark  fixed-top" style="background-color: #925B33;">
-        <div class="container">
-          <a class="navbar-brand mr-4" href="/">CorkBoard</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarToggle">
+  <header class="site-header">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: #925B33;">
+      <div class="container">
+        <a class="navbar-brand mr-4" href="/">CorkBoard</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+  
+        <div class="collapse navbar-collapse" id="navbarToggle">
+          {% if current_user.is_authenticated %}
             <div class="navbar-nav mr-auto">
-                <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
+              <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
-              {% if current_user.is_authenticated %}
-                <a class="nav-item nav-link" href="/boards/create">Create</a>
-                <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
-                <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
-              {% else %}
-                <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
-                <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
-              {% endif %}
+              <a class="nav-item nav-link" href="{{ url_for('new_post') }}">New Post</a>
+              <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
+              <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
             </div>
-          </div>
+          {% else %}
+            <!-- Navbar Right Side for Non-authenticated users -->
+            <div class="navbar-nav ml-auto">
+              <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
+              <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
+            </div>
+          {% endif %}
         </div>
-      </nav>
-    </header>
+      </div>
+    </nav>
+  </header>
+  
     <main role="main" class="container">
       <div class="row">
         <div class="col-md-8">
@@ -58,38 +66,30 @@
           {% block content %}{% endblock %}
         </div>
 
-        {% if template_name == 'home.html' %}
-        <div class="col-md-4">
-          <div class="content-section">
-            
-            <h3>Menu</h3>
-            <p class='text-muted'>You can put any information here you'd like.
-              <ul class="list-group">
+        {% if template_name in ['home.html', 'starredBoards.html', 'search_user.html', 'user_posts.html'] %}
+            <div class="col-md-4">
+              <div class="content-section">
                 
+                <h3>Menu</h3>
+                <p class='text-muted'>You can put any information here you'd like.
+                  <ul class="list-group">
                 
-                <li class="list-group-item list-group-item-light">
-                  <a class="article-title" href="{{ url_for('recentBoards')}}">Recently Viewed CorkBoards </a>
-                </li>
+                    <li class="list-group-item list-group-item-light">
+                      <a class="article-title" href="{{ url_for('favoriteboards') }}">Starred Boards </a>
+                    </li>
 
-                <li class="list-group-item list-group-item-light">
-                  <a class="article-title" href="{{ url_for('favoriteBoards') }}">Starred Boards </a>
-                </li>
+                    <li class="list-group-item list-group-item-light">
+                      <a class="article-title" href="{{ url_for('search_user') }}">Search Boards </a>
+                    </li>
 
-                <li class="list-group-item list-group-item-light">
-                  <a class="article-title" href="{{ url_for('search') }}">Search Boards </a>
-                </li>
+                  </ul>
+                </p>
+                
 
-                <li class="list-group-item list-group-item-light">
-                  <a class="article-title" href="{{ url_for('myBoards') }}">View CorkBoards </a>
-                </li>
-
-              </ul>
-            </p>
-            
-
-          </div>
-        </div> 
+              </div>
+            </div> 
         {% endif %}
+  
       </div>
     </main>
    
@@ -119,5 +119,8 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/a14e6235fb.js" crossorigin="anonymous"></script>
+
 </body>
+
 </html>
